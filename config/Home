@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Collect all output from this script to ~/Library/Logs/WiFiLocControl.log
+exec 2>&1
+
+# Disable stealth mode which makes your computer 
+/usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode off
+
+# Send a notification indicating that location has changed
+# osascript -e 'display notification "Location changed to Home" with title "Network Location"'
+# Send a dialog indicating that location has changed
+osascript -e 'display dialog "Location changed to Home" with title "Network Location" buttons {"Accept"} default button 1'
