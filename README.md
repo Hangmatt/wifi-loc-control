@@ -35,6 +35,14 @@ automatically. If you connect to a Wi-Fi without a special name, it defaults to 
 
 ## Configuration
 
+Create a file in ~/.wifi-loc-control with the name alias.conf. In this file create a list consisting of the wifi names combined with the location.
+```text
+[WiFi name]=[WiFi location]
+My_Home_Wi-fi=Home
+My_work_Wi-fi=Work
+```
+
+
 ### Aliasing
 
 If you want to share one network location between different wireless networks (for instance, you

@@ -5,9 +5,21 @@ DEFAULT_NETWORK_LOCATION=Automatic
 CONFIG_DIR=$HOME/.wifi-loc-control
 ALIAS_CONFIG_PATH=$CONFIG_DIR/alias.conf
 
-# redirecting both standard output and standard error to the same location and appending
-# it to a log file under the user's home directory ($HOME).
-exec 2>&1 >> $LOGS_PATH
+# Read LOG_ENABLED from alias.conf if present
+LOG_ENABLED="false"  # Default value
+if [ -f "$ALIAS_CONFIG_PATH" ]; then
+  conf_log_enabled=$(grep "^LOG_ENABLED=" "$ALIAS_CONFIG_PATH" | sed -nE 's/LOG_ENABLED=(.*)/\1/p')
+  if [ "$conf_log_enabled" != "" ]; then
+    LOG_ENABLED=$conf_log_enabled
+  fi
+fi
+
+# Only redirect output to log if LOG_ENABLED is true
+if [ "$LOG_ENABLED" = "true" ]; then
+  # redirecting both standard output and standard error to the same location and appending
+  # it to a log file under the user's home directory ($HOME).
+  exec 2>&1 >> $LOGS_PATH
+fi
 
 # allow time for file descriptors to be set up and log file to be created
 sleep 3
